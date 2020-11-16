@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package sbin;
+
+option go_package = "sbin_pb;sbin_pb";
+
+message Location{
+    string region = 1;
+    string city = 2;
+    string place = 3;
+    string lat = 4;
+    string long = 5;
+}
+
+message Bin{
+    string id = 1;
+    string name = 2;
+    string state = 3;
+    int32 level = 4;
+    Location location = 5;
+}
+
+message BinRequest{
+    Bin bin = 1;
+}
+
+message BinResponse{
+    bool status = 1;
+}
+
+message GetFullBinsRequest{
+    string city = 1;
+}
+
+message GetFullBinsResponse{
+    repeated Bin bins = 1;
+    int32 num_bin = 2;
+}
+
+service BinService{
+    rpc CreateBin (BinRequest) returns (BinResponse); //unary server
+
+    rpc GetFullBins(GetFullBinsRequest) returns ( GetFullBinsResponse); // unary server
+}
+
